@@ -1,7 +1,7 @@
 node
 {
-def mavenHome = tool name: "maven3.6.3"
-properties([[$class: 'JiraProjectProperty'], authorizationMatrix([]), buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '3', daysToKeepStr: '', numToKeepStr: '3')), parameters([choice(choices: ['development', 'master', 'stage'], description: '', name: 'branchs')]), rateLimitBuilds([count: 1, durationName: 'second', userBoost: false]), pipelineTriggers([pollSCM('* * * * *')])])
+def mavenHome = tool name: "maven3.6.3"     
+ 
 
 stage (' checkout')
 {
@@ -12,15 +12,15 @@ stage (' build')
 {
 sh "${mavenHome}/bin/mvn clean package"
 }
-
+/*
 stage (' excustive sonar report')
 {
 sh "${mavenHome}/bin/mvn sonar:sonar"
 }
-/*
+
 stage ('upload artifactory nexus')
 {
-sh "${mavenHome}/bin/mvn deploy"
+sh "${mavenHome}/bin/mvn deploy
 }
 
 stage ('email notification')
@@ -33,4 +33,3 @@ balaji''', subject: 'build is over', to: 'devteam814@gmail.com'
 }
 */
 }
-
