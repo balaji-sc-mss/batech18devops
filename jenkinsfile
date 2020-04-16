@@ -1,0 +1,36 @@
+node
+{
+def mavenHome = tool name: "maven3.6.3"
+properties([[$class: 'JiraProjectProperty'], authorizationMatrix([]), buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '3', daysToKeepStr: '', numToKeepStr: '3')), parameters([choice(choices: ['development', 'master', 'stage'], description: '', name: 'branchs')]), rateLimitBuilds([count: 1, durationName: 'second', userBoost: false]), pipelineTriggers([pollSCM('* * * * *')])])
+
+stage (' checkout')
+{
+git branch: 'development', credentialsId: '3967eeb0-0426-40e3-8828-bd5dd80b8d0c', url: 'https://github.com/balaji-sc-mss/maven-web-application.git'
+}
+
+stage (' build')
+{
+sh "${mavenHome}/bin/mvn clean package"
+}
+
+stage (' excustive sonar report')
+{
+sh "${mavenHome}/bin/mvn sonar:sonar"
+}
+/*
+stage ('upload artifactory nexus')
+{
+sh "${mavenHome}/bin/mvn deploy"
+}
+
+stage ('email notification')
+{
+emailext body: '''build is over 
+ 
+
+regads 
+balaji''', subject: 'build is over', to: 'devteam814@gmail.com'
+}
+*/
+}
+
