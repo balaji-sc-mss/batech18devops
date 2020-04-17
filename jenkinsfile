@@ -17,21 +17,26 @@ stage (' excustive sonar report')
 {
 sh "${mavenHome}/bin/mvn sonar:sonar"
 }
-/*
+
 stage ('upload artifactory nexus')
 {
 sh "${mavenHome}/bin/mvn deploy"
 }
 
+stage ('deploy appinfoTomcat server')
+{
+    sshagent(['05148591-314c-4053-9a70-7e1d44155757']) {
+        sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.234.239.230:/opt/apache-tomcat-9.0.33/webapps"
+}
+}
+
 stage ('email notification')
 {
 emailext body: '''build is over 
- 
 
 regads 
-balaji''', subject: 'build is over', to: 'devteam814@gmail.com'
+balaji
+''', subject: 'build is over', to: 'devteam814@gmail.com'
 }
 
-*/
 }
-
