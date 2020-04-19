@@ -12,7 +12,7 @@ stage (' build')
 {
 sh "${mavenHome}/bin/mvn clean package"
 }
-
+/*
 stage (' excustive sonar report')
 {
 sh "${mavenHome}/bin/mvn sonar:sonar"
@@ -29,7 +29,7 @@ stage ('deploy appinfoTomcat server')
         sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.234.239.230:/opt/apache-tomcat-9.0.33/webapps"
 }
 }
-*/
+
 stage ('email notification')
 {
 emailext body: '''build is over 
