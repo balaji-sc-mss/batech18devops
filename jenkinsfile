@@ -12,12 +12,12 @@ stage (' build')
 {
 sh "${mavenHome}/bin/mvn clean package"
 }
-/*
+//
 stage (' excustive sonar report')
 {
 sh "${mavenHome}/bin/mvn sonar:sonar"
 }
-/*
+
 stage ('upload artifactory nexus')
 {
 sh "${mavenHome}/bin/mvn deploy"
